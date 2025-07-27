@@ -3,21 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movable Widgets</title>
+    <title>Draggable Widgets Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="widget-container">
-        <div class="widget" draggable="true">
-            <h2>Widget 1</h2>
-            <p>This is a draggable widget.</p>
-        </div>
-        <div class="widget" draggable="true">
-            <h2>Widget 2</h2>
-            <p>Drag me around!</p>
-        </div>
+
+    <div class="app-container">
+        <main class="main-content" id="main-content">
+            <!-- Widgets can be dropped here -->
+        </main>
+
+        <aside class="widget-sidebar" id="widget-sidebar">
+            <h3>Widgets</h3>
+            <div class="widget" draggable="true">
+                <h4>Widget 1</h4>
+                <p>This is a draggable widget.</p>
+            </div>
+            <div class="widget" draggable="true">
+                <h4>Widget 2</h4>
+                <p>Drag me around!</p>
+            </div>
+             <div class="widget" draggable="true">
+                <h4>Widget 3</h4>
+                <p>Another draggable widget.</p>
+            </div>
+        </aside>
     </div>
+
     <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js'></script>
     <script src="script.js"></script>
+
 </body>
 </html>

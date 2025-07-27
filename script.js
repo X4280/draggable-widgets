@@ -6,37 +6,38 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const drake = dragula(containers);
 
-    // Listen for the 'drop' event from Dragula
     drake.on('drop', (el, target, source) => {
-        // Check if the dropped element is our iframe widget AND if it was dropped into a drop-zone
-        if (el.classList.contains('iframe-widget') && target.classList.contains('drop-zone')) {
+        // Check if it's our special widget and is being dropped for the first time
+        if (el.classList.contains('iframe-widget') && !el.dataset.configured) {
             
-            // Check if the iframe has already been created to avoid duplicating it
-            const existingIframe = el.querySelector('iframe');
-            if (existingIframe) {
-                return; // Do nothing if the iframe is already there
+            // Prompt the user for a URL
+            const userUrl = prompt("Please enter the URL to embed:", "https://");
+
+            // If the user entered a URL
+            if (userUrl && userUrl.trim() !== "") {
+                // Clear the widget's placeholder content
+                el.innerHTML = ''; 
+
+                // Create the iframe
+                const iframe = document.createElement('iframe');
+                iframe.src = userUrl;
+                
+                // SECURITY: Sandbox the iframe to restrict its permissions
+                iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups';
+
+                // Append the iframe to the widget
+                el.appendChild(iframe);
+
+                // Add a data attribute to mark this widget as 'configured'
+                el.dataset.configured = 'true';
+
+                 // Change the class to fill the container
+                el.classList.add('iframe-loaded');
+
+            } else {
+                // If the user cancels, update the widget text
+                el.innerHTML = '<h4>Iframe Canceled</h4><p>Drag back to the sidebar to remove.</p>';
             }
-
-            // Get the URL from our data attribute
-            const iframeSrc = el.dataset.iframeSrc;
-            if (!iframeSrc) return; // Exit if there's no src URL
-
-            // Clear the placeholder text (like "Drag to a drop zone...")
-            const placeholder = el.querySelector('p');
-            if (placeholder) {
-                placeholder.style.display = 'none';
-            }
-
-            // Create the container and the iframe elements
-            const iframeContainer = document.createElement('div');
-            iframeContainer.className = 'widget-iframe-container';
-
-            const iframe = document.createElement('iframe');
-            iframe.src = iframeSrc;
-            
-            // Append the iframe to the container, and the container to the widget
-            iframeContainer.appendChild(iframe);
-            el.appendChild(iframeContainer);
         }
     });
 });

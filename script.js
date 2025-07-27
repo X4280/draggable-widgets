@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    const mainContent = document.getElementById('main-content');
-    const widgetSidebar = document.getElementById('widget-sidebar');
+    // Collect all containers into an array
+    const containers = [
+        document.querySelector('.widget-sidebar'),
+        ...document.querySelectorAll('.drop-zone')
+    ];
 
-    dragula([mainContent, widgetSidebar]);
+    dragula(containers);
 });
